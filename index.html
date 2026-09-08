@@ -5,432 +5,1122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SkillTrack - Student Career Portal</title>
+    <title>SkillTrack | Student Career Portal</title>
 
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 
+    <!-- Existing Theme -->
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        [ng-cloak] {
+            display: none !important;
+        }
+    </style>
 </head>
 
-<body ng-controller="MainController">
+<body ng-controller="MainController" ng-cloak>
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand fw-bold">🎓 SkillTrack</a>
+    <!-- ================= APP ================= -->
+    <div class="app-wrapper">
 
-            <div>
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="sidebar">
 
-    <button class="btn btn-outline-light me-2"
-            ng-click="showSection('dashboard')">
-        Dashboard
-    </button>
+            <div class="brand-area">
+                <div class="brand-logo">S</div>
 
-    <button class="btn btn-outline-light me-2"
-            ng-click="showSection('skills')">
-        Skills
-    </button>
-
-    <button class="btn btn-outline-light me-2"
-            ng-click="showSection('courses')">
-        Courses
-    </button>
-
-    <button class="btn btn-outline-light me-2"
-            ng-click="showSection('internships')">
-        Internships
-    </button>
-
-    <button class="btn btn-outline-light"
-            ng-click="showSection('projects')">
-        Projects
-    </button>
-
-</div>
-        </div>
-    </nav>
-
-
-    <!-- DASHBOARD -->
-    <div class="container mt-5" ng-show="section == 'dashboard'">
-
-        <div class="text-center mb-5">
-            <h1>Welcome to SkillTrack 🚀</h1>
-            <p class="text-muted">
-                Manage your career growth in one place.
-            </p>
-        </div>
-
-        <div class="row g-4">
-
-            <div class="col-md-3">
-                <div class="card dashboard-card text-center p-4">
-                    <h2>{{skills.length}}</h2>
-                    <h5>💻 Skills</h5>
+                <div>
+                    <h4>SkillTrack</h4>
+                    <small>Career Portal</small>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card dashboard-card text-center p-4">
-                    <h2>{{courses.length}}</h2>
-                    <h5>📚 Courses</h5>
-                </div>
-            </div>
+            <div class="sidebar-menu">
 
-            <div class="col-md-3">
-                <div class="card dashboard-card text-center p-4">
-                    <h2>{{internships.length}}</h2>
-                    <h5>🏢 Internships</h5>
-                </div>
-            </div>
+                <p class="menu-title">MAIN MENU</p>
 
-            <div class="col-md-3">
-                <div class="card dashboard-card text-center p-4">
-                    <h2>{{projects.length}}</h2>
-                    <h5>🚀 Projects</h5>
-                </div>
-            </div>
+                <button
+                    class="sidebar-link"
+                    ng-class="{active: section === 'dashboard'}"
+                    ng-click="showSection('dashboard')">
 
-        </div>
+                    <span class="menu-icon">⌂</span>
+                    Dashboard
+                </button>
 
-        <!-- PROFILE -->
-        <div class="card profile-card mt-5 p-4">
-            <h3>👤 Student Profile</h3>
+                <button
+                    class="sidebar-link"
+                    ng-class="{active: section === 'skills'}"
+                    ng-click="showSection('skills')">
 
-            <hr>
+                    <span class="menu-icon">✦</span>
+                    Skills
+                </button>
 
-            <p><strong>Name:</strong> {{student.name}}</p>
-            <p><strong>Course:</strong> {{student.course}}</p>
-            <p><strong>Year:</strong> {{student.year}}</p>
+                <button
+                    class="sidebar-link"
+                    ng-class="{active: section === 'courses'}"
+                    ng-click="showSection('courses')">
 
-            <button class="btn btn-dark"
+                    <span class="menu-icon">▣</span>
+                    Courses
+                </button>
+
+                <button
+                    class="sidebar-link"
+                    ng-class="{active: section === 'internships'}"
+                    ng-click="showSection('internships')">
+
+                    <span class="menu-icon">◈</span>
+                    Internships
+                </button>
+
+                <button
+                    class="sidebar-link"
+                    ng-class="{active: section === 'projects'}"
+                    ng-click="showSection('projects')">
+
+                    <span class="menu-icon">◆</span>
+                    Projects
+                </button>
+
+                <p class="menu-title mt-4">ACCOUNT</p>
+
+                <button
+                    class="sidebar-link"
+                    ng-class="{active: section === 'profile'}"
                     ng-click="showSection('profile')">
-                View Profile
-            </button>
-        </div>
-        <!-- CAREER PROGRESS -->
-         <!-- QUICK ACTIONS -->
-          <button class="btn btn-primary mt-3"
-        ng-click="saveData()">
-    💾 Save All Data
-</button>
-<div class="card mt-4 p-4 text-center">
 
-    <h3>⚡ Quick Actions</h3>
-    <p class="text-muted">Manage your career activities</p>
-
-    <div class="mt-3">
-
-        <button class="btn btn-primary m-2"
-                ng-click="showSection('skills')">
-            💻 Manage Skills
-        </button>
-
-        <button class="btn btn-success m-2"
-                ng-click="showSection('courses')">
-            📚 Manage Courses
-        </button>
-
-        <button class="btn btn-warning m-2"
-                ng-click="showSection('internships')">
-            🏢 Track Internships
-        </button>
-
-        <button class="btn btn-dark m-2"
-                ng-click="showSection('projects')">
-            🚀 Manage Projects
-        </button>
-
-    </div>
-
-</div>
-<div class="card mt-4 p-4">
-
-    <h3>📊 Career Progress</h3>
-
-    <p class="mt-3">Overall Progress</p>
-
-    <div class="progress" style="height: 25px;">
-        <div class="progress-bar"
-             role="progressbar"
-             style="width: 70%;">
-            70%
-        </div>
-    </div>
-
-</div>
-
-    </div>
-
-
-    <!-- PROFILE SECTION -->
-    <div class="container mt-5" ng-show="section == 'profile'">
-
-        <div class="card p-4">
-            <h2>👤 My Profile</h2>
-
-            <hr>
-            <input class="form-control mb-3"
-       ng-model="student.email"
-       placeholder="Enter email">
-
-<input class="form-control mb-3"
-       ng-model="student.phone"
-       placeholder="Enter phone number">
-
-            <input class="form-control mb-3"
-                   ng-model="student.name"
-                   placeholder="Enter your name">
-
-            <input class="form-control mb-3"
-                   ng-model="student.course"
-                   placeholder="Enter course">
-
-            <input class="form-control mb-3"
-                   ng-model="student.year"
-                   placeholder="Enter year">
-
-            <button class="btn btn-success"
-                    ng-click="saveProfile()">
-                Save Profile
-            </button>
-        </div>
-
-    </div>
-    <!-- COURSES SECTION -->
-<div class="container mt-5" ng-show="section == 'courses'">
-
-    <div class="card p-4">
-
-        <h2>📚 My Courses</h2>
-
-        <input type="text"
-               class="form-control my-3"
-               ng-model="courseSearch"
-               placeholder="🔍 Search course">
-
-        <div class="input-group mb-3">
-
-            <input type="text"
-                   class="form-control"
-                   ng-model="newCourse"
-                   placeholder="Enter course name">
-
-            <button class="btn btn-primary"
-                    ng-click="addCourse()">
-                + Add Course
-            </button>
-
-        </div>
-
-        <div class="project-item"
-     ng-repeat="course in courses | filter:courseSearch">
-
-    <div class="d-flex justify-content-between align-items-center">
-        
-        <strong>📚 {{course}}</strong>
-
-        <button class="btn btn-sm btn-danger"
-                ng-click="deleteCourse($index)">
-            Delete
-        </button>
-
-    </div>
-
-    <div class="mt-3">
-        <label>Course Progress</label>
-
-        <input type="range"
-               class="form-range"
-               min="0"
-               max="100"
-               ng-model="courseProgress[$index]">
-
-        <div class="progress mt-2" style="height: 20px;">
-            <div class="progress-bar"
-                 style="width: {{courseProgress[$index]}}%;">
-                {{courseProgress[$index] || 0}}%
-            </div>
-        </div>
-    </div>
-
-</div>
-
-    </div>
-
-</div>
-
-
-<!-- INTERNSHIPS SECTION -->
-<div class="container mt-5" ng-show="section == 'internships'">
-
-    <div class="card p-4">
-
-        <h2>🏢 My Internships</h2>
-
-        <input type="text"
-               class="form-control my-3"
-               ng-model="internshipSearch"
-               placeholder="🔍 Search internship">
-
-        <div class="input-group mb-3">
-
-            <input type="text"
-                   class="form-control"
-                   ng-model="newInternship"
-                   placeholder="Enter internship name">
-
-            <button class="btn btn-success"
-                    ng-click="addInternship()">
-                + Add Internship
-            </button>
-
-        </div>
-
-        <div class="project-item"
-     ng-repeat="internship in internships | filter:internshipSearch">
-     
-
-    <div class="d-flex justify-content-between align-items-center">
-
-        <strong>🏢 {{internship}}</strong>
-
-        <button class="btn btn-sm btn-danger"
-                ng-click="deleteInternship($index)">
-            Delete
-        </button>
-
-    </div>
-
-    <div class="mt-3">
-
-        <label class="mb-2">Application Status</label>
-
-        <select class="form-select"
-                ng-model="internshipStatus[$index]">
-
-            <option value="Applied">Applied</option>
-            <option value="Selected">Selected</option>
-            <option value="Rejected">Rejected</option>
-
-        </select>
-
-        <div class="mt-2">
-
-            <span ng-if="internshipStatus[$index] == 'Applied'"
-                  class="badge bg-warning text-dark">
-                🟡 Applied
-            </span>
-
-            <span ng-if="internshipStatus[$index] == 'Selected'"
-                  class="badge bg-success">
-                🟢 Selected
-            </span>
-
-            <span ng-if="internshipStatus[$index] == 'Rejected'"
-                  class="badge bg-danger">
-                🔴 Rejected
-            </span>
-
-        </div>
-
-    </div>
-
-</div>
-
-    </div>
-
-</div>
-
-
-    <!-- SKILLS SECTION -->
-    <div class="container mt-5" ng-show="section == 'skills'">
-
-        <div class="card p-4">
-
-            <h2>💻 My Skills</h2>
-
-            <input type="text"
-                   class="form-control my-3"
-                   ng-model="skillSearch"
-                   placeholder="🔍 Search skill">
-
-            <div class="input-group mb-3">
-
-                <input type="text"
-                       class="form-control"
-                       ng-model="newSkill"
-                       placeholder="Enter new skill">
-
-                <button class="btn btn-primary"
-                        ng-click="addSkill()">
-                    + Add Skill
+                    <span class="menu-icon">○</span>
+                    My Profile
                 </button>
 
             </div>
 
-            <div class="skill-list">
+            <div class="sidebar-bottom">
 
-                <div class="skill-item"
-                     ng-repeat="skill in skills | filter:skillSearch">
+                <div class="career-mini-card">
+                    <div class="mini-icon">✦</div>
 
-                    {{skill}}
+                    <div>
+                        <strong>Keep Growing</strong>
+                        <small>Build your career</small>
+                    </div>
+                </div>
 
-                    <button class="btn btn-sm btn-danger float-end"
-                            ng-click="deleteSkill($index)">
-                        Delete
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <main class="main-content">
+
+            <!-- ================= TOPBAR ================= -->
+            <header class="topbar">
+
+                <div>
+                    <span class="page-label">STUDENT CAREER PORTAL</span>
+
+                    <h5>
+                        {{ section | uppercase }}
+                    </h5>
+                </div>
+
+                <button
+                    class="profile-top-btn"
+                    ng-click="showSection('profile')">
+
+                    <div class="profile-avatar">
+                        {{ student.name.charAt(0) || 'S' }}
+                    </div>
+
+                    <div class="profile-top-info">
+                        <strong>{{ student.name }}</strong>
+                        <small>{{ student.course }}</small>
+                    </div>
+
+                </button>
+
+            </header>
+
+
+            <!-- ================================================= -->
+            <!-- DASHBOARD -->
+            <!-- ================================================= -->
+            <section ng-show="section === 'dashboard'">
+
+                <!-- HERO -->
+                <div class="dashboard-hero">
+
+                    <div class="hero-content">
+
+                        <span class="hero-label">
+                            WELCOME BACK
+                        </span>
+
+                        <h1>
+                            Welcome to SkillTrack
+                        </h1>
+
+                        <p>
+                            Manage your skills, courses, internships
+                            and projects in one place.
+                        </p>
+
+                        <div class="hero-buttons">
+
+                            <button
+                                class="primary-btn"
+                                ng-click="showSection('profile')">
+
+                                View Profile
+                            </button>
+
+                            <button
+                                class="secondary-btn"
+                                ng-click="saveData()">
+
+                                Save All Data
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="hero-decoration">
+                        <div class="hero-circle circle-one"></div>
+                        <div class="hero-circle circle-two"></div>
+                        <div class="hero-symbol">S</div>
+                    </div>
+
+                </div>
+
+
+                <!-- ================= STATS ================= -->
+                <div class="row g-4 mt-1">
+
+                    <div class="col-xl-3 col-md-6">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon purple">
+                                ✦
+                            </div>
+
+                            <div>
+                                <span>Total Skills</span>
+                                <h2>{{ skills.length }}</h2>
+                                <small>Skills added</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-xl-3 col-md-6">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon lavender">
+                                ▣
+                            </div>
+
+                            <div>
+                                <span>Total Courses</span>
+                                <h2>{{ courses.length }}</h2>
+                                <small>Courses enrolled</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-xl-3 col-md-6">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon pink">
+                                ◈
+                            </div>
+
+                            <div>
+                                <span>Internships</span>
+                                <h2>{{ internships.length }}</h2>
+                                <small>Career opportunities</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-xl-3 col-md-6">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon violet">
+                                ◆
+                            </div>
+
+                            <div>
+                                <span>Projects</span>
+                                <h2>{{ projects.length }}</h2>
+                                <small>Projects completed</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= LOWER DASHBOARD ================= -->
+                <div class="row g-4 mt-2">
+
+                    <!-- PROFILE -->
+                    <div class="col-lg-5">
+
+                        <div class="premium-card profile-dashboard-card">
+
+                            <div class="card-heading">
+
+                                <div>
+                                    <span class="section-label">
+                                        STUDENT PROFILE
+                                    </span>
+
+                                    <h4>About You</h4>
+                                </div>
+
+                                <button
+                                    class="icon-btn"
+                                    ng-click="showSection('profile')">
+                                    →
+                                </button>
+
+                            </div>
+
+
+                            <div class="student-profile">
+
+                                <div class="large-avatar">
+                                    {{ student.name.charAt(0) || 'S' }}
+                                </div>
+
+                                <div>
+                                    <h3>{{ student.name }}</h3>
+
+                                    <p>
+                                        {{ student.course }}
+                                    </p>
+
+                                    <span class="year-badge">
+                                        {{ student.year }}
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="profile-details">
+
+                                <div class="detail-row">
+
+                                    <span>Email</span>
+                                    <strong>
+                                        {{ student.email || 'Not added' }}
+                                    </strong>
+
+                                </div>
+
+                                <div class="detail-row">
+
+                                    <span>Phone</span>
+                                    <strong>
+                                        {{ student.phone || 'Not added' }}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                class="full-width-btn"
+                                ng-click="showSection('profile')">
+
+                                Manage Profile
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CAREER PROGRESS -->
+                    <div class="col-lg-7">
+
+                        <div class="premium-card">
+
+                            <div class="card-heading">
+
+                                <div>
+                                    <span class="section-label">
+                                        YOUR JOURNEY
+                                    </span>
+
+                                    <h4>Career Progress</h4>
+                                </div>
+
+                                <span class="progress-percentage">
+                                    70%
+                                </span>
+
+                            </div>
+
+
+                            <div class="career-progress-box">
+
+                                <div class="progress-track">
+
+                                    <div
+                                        class="progress-fill"
+                                        style="width:70%;">
+                                    </div>
+
+                                </div>
+
+                                <div class="progress-text">
+                                    <span>Career Development</span>
+                                    <strong>70% Complete</strong>
+                                </div>
+
+                            </div>
+
+
+                            <div class="progress-message">
+
+                                <div class="message-icon">
+                                    ✦
+                                </div>
+
+                                <div>
+                                    <strong>You're making great progress!</strong>
+
+                                    <p>
+                                        Continue improving your skills and
+                                        completing projects to grow your career.
+                                    </p>
+                                </div>
+
+                            </div>
+
+
+                            <!-- QUICK ACTIONS -->
+
+                            <div class="quick-actions-title">
+                                Quick Actions
+                            </div>
+
+                            <div class="quick-actions">
+
+                                <button
+                                    ng-click="showSection('skills')">
+
+                                    <span>✦</span>
+                                    <small>Skills</small>
+
+                                </button>
+
+                                <button
+                                    ng-click="showSection('courses')">
+
+                                    <span>▣</span>
+                                    <small>Courses</small>
+
+                                </button>
+
+                                <button
+                                    ng-click="showSection('internships')">
+
+                                    <span>◈</span>
+                                    <small>Internships</small>
+
+                                </button>
+
+                                <button
+                                    ng-click="showSection('projects')">
+
+                                    <span>◆</span>
+                                    <small>Projects</small>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================================= -->
+            <!-- PROFILE -->
+            <!-- ================================================= -->
+            <section ng-show="section === 'profile'">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="section-label">
+                            ACCOUNT
+                        </span>
+
+                        <h2>My Profile</h2>
+
+                        <p>
+                            Manage your personal and academic information.
+                        </p>
+                    </div>
+
+                    <button
+                        class="secondary-btn"
+                        ng-click="showSection('dashboard')">
+
+                        ← Dashboard
                     </button>
 
                 </div>
 
-            </div>
 
-        </div>
+                <div class="premium-card">
+
+                    <div class="profile-edit-header">
+
+                        <div class="large-avatar">
+                            {{ student.name.charAt(0) || 'S' }}
+                        </div>
+
+                        <div>
+                            <h3>{{ student.name }}</h3>
+                            <p>{{ student.course }} · {{ student.year }}</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row g-4 mt-2">
+
+                        <div class="col-md-6">
+
+                            <label>Full Name</label>
+
+                            <input
+                                type="text"
+                                class="form-control modern-input"
+                                ng-model="student.name">
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label>Email</label>
+
+                            <input
+                                type="email"
+                                class="form-control modern-input"
+                                ng-model="student.email">
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label>Phone</label>
+
+                            <input
+                                type="text"
+                                class="form-control modern-input"
+                                ng-model="student.phone">
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label>Course</label>
+
+                            <input
+                                type="text"
+                                class="form-control modern-input"
+                                ng-model="student.course">
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label>Year</label>
+
+                            <input
+                                type="text"
+                                class="form-control modern-input"
+                                ng-model="student.year">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <button
+                            class="primary-btn"
+                            ng-click="saveProfile()">
+
+                            Save Profile
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================================= -->
+            <!-- SKILLS -->
+            <!-- ================================================= -->
+            <section ng-show="section === 'skills'">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="section-label">DEVELOPMENT</span>
+
+                        <h2>My Skills</h2>
+
+                        <p>
+                            Track the technical skills you are developing.
+                        </p>
+                    </div>
+
+                    <button
+                        class="secondary-btn"
+                        ng-click="showSection('dashboard')">
+
+                        ← Dashboard
+                    </button>
+
+                </div>
+
+
+                <!-- ADD + SEARCH -->
+                <div class="premium-card mb-4">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-8">
+
+                            <label>Add New Skill</label>
+
+                            <input
+                                type="text"
+                                class="form-control modern-input"
+                                placeholder="Example: Python"
+                                ng-model="newSkill">
+
+                        </div>
+
+                        <div class="col-md-4 d-flex align-items-end">
+
+                            <button
+                                class="primary-btn w-100"
+                                ng-click="addSkill()">
+
+                                + Add Skill
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="premium-card">
+
+                    <div class="card-heading">
+
+                        <div>
+                            <h4>Your Skills</h4>
+                            <span>{{ skills.length }} skills</span>
+                        </div>
+
+                        <input
+                            type="text"
+                            class="search-input"
+                            placeholder="Search skills..."
+                            ng-model="skillSearch">
+
+                    </div>
+
+
+                    <div class="item-grid">
+
+                        <div
+                            class="skill-item"
+                            ng-repeat="skill in skills | filter:skillSearch">
+
+                            <div class="item-icon">
+                                ✦
+                            </div>
+
+                            <strong>{{ skill }}</strong>
+
+                            <button
+                                class="delete-btn"
+                                ng-click="deleteSkill($index)">
+
+                                ×
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================================= -->
+            <!-- COURSES -->
+            <!-- ================================================= -->
+            <section ng-show="section === 'courses'">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="section-label">LEARNING</span>
+
+                        <h2>My Courses</h2>
+
+                        <p>
+                            Keep track of your courses and learning progress.
+                        </p>
+                    </div>
+
+                    <button
+                        class="secondary-btn"
+                        ng-click="showSection('dashboard')">
+
+                        ← Dashboard
+                    </button>
+
+                </div>
+
+
+                <!-- ADD COURSE -->
+                <div class="premium-card mb-4">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-8">
+
+                            <label>Add New Course</label>
+
+                            <input
+                                type="text"
+                                class="form-control modern-input"
+                                placeholder="Example: Web Development"
+                                ng-model="newCourse">
+
+                        </div>
+
+                        <div class="col-md-4 d-flex align-items-end">
+
+                            <button
+                                class="primary-btn w-100"
+                                ng-click="addCourse()">
+
+                                + Add Course
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- COURSE LIST -->
+                <div class="premium-card">
+
+                    <div class="card-heading">
+
+                        <div>
+                            <h4>Course Progress</h4>
+                            <span>{{ courses.length }} courses</span>
+                        </div>
+
+                        <input
+                            type="text"
+                            class="search-input"
+                            placeholder="Search courses..."
+                            ng-model="courseSearch">
+
+                    </div>
+
+
+                    <div class="course-list">
+
+                        <div
+                            class="course-item"
+                            ng-repeat="course in courses | filter:courseSearch">
+
+                            <div class="course-top">
+
+                                <div class="item-icon">
+                                    ▣
+                                </div>
+
+                                <div class="course-name">
+                                    <strong>{{ course }}</strong>
+                                    <span>
+                                        Learning progress
+                                    </span>
+                                </div>
+
+                                <button
+                                    class="delete-btn"
+                                    ng-click="deleteCourse($index)">
+
+                                    ×
+                                </button>
+
+                            </div>
+
+
+                            <div class="course-progress">
+
+                                <div class="progress-track">
+
+                                    <div
+                                        class="progress-fill"
+                                        ng-style="{'width': (courseProgress[$index] || 0) + '%'}">
+                                    </div>
+
+                                </div>
+
+                                <div class="course-progress-bottom">
+
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="100"
+                                        ng-model="courseProgress[$index]">
+
+                                    <strong>
+                                        {{ courseProgress[$index] || 0 }}%
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================================= -->
+            <!-- INTERNSHIPS -->
+            <!-- ================================================= -->
+            <section ng-show="section === 'internships'">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="section-label">EXPERIENCE</span>
+
+                        <h2>My Internships</h2>
+
+                        <p>
+                            Track your internship applications and status.
+                        </p>
+                    </div>
+
+                    <button
+                        class="secondary-btn"
+                        ng-click="showSection('dashboard')">
+
+                        ← Dashboard
+                    </button>
+
+                </div>
+
+
+                <!-- ADD INTERNSHIP -->
+                <div class="premium-card mb-4">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-8">
+
+                            <label>Add New Internship</label>
+
+                            <input
+                                type="text"
+                                class="form-control modern-input"
+                                placeholder="Example: Web Development Internship"
+                                ng-model="newInternship">
+
+                        </div>
+
+                        <div class="col-md-4 d-flex align-items-end">
+
+                            <button
+                                class="primary-btn w-100"
+                                ng-click="addInternship()">
+
+                                + Add Internship
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- INTERNSHIP LIST -->
+                <div class="premium-card">
+
+                    <div class="card-heading">
+
+                        <div>
+                            <h4>Internship Applications</h4>
+                            <span>{{ internships.length }} internships</span>
+                        </div>
+
+                        <input
+                            type="text"
+                            class="search-input"
+                            placeholder="Search internships..."
+                            ng-model="internshipSearch">
+
+                    </div>
+
+
+                    <div class="item-list">
+
+                        <div
+                            class="internship-item"
+                            ng-repeat="internship in internships | filter:internshipSearch">
+
+                            <div class="item-icon">
+                                ◈
+                            </div>
+
+                            <div class="item-main">
+
+                                <strong>
+                                    {{ internship }}
+                                </strong>
+
+                                <span>
+                                    Internship opportunity
+                                </span>
+
+                            </div>
+
+
+                            <select
+                                class="status-select"
+                                ng-model="internshipStatus[$index]">
+
+                                <option value="Applied">
+                                    Applied
+                                </option>
+
+                                <option value="Selected">
+                                    Selected
+                                </option>
+
+                                <option value="Rejected">
+                                    Rejected
+                                </option>
+
+                            </select>
+
+
+                            <button
+                                class="delete-btn"
+                                ng-click="deleteInternship($index)">
+
+                                ×
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================================= -->
+            <!-- PROJECTS -->
+            <!-- ================================================= -->
+            <section ng-show="section === 'projects'">
+
+                <div class="section-header">
+
+                    <div>
+                        <span class="section-label">PORTFOLIO</span>
+
+                        <h2>My Projects</h2>
+
+                        <p>
+                            Showcase and manage your academic projects.
+                        </p>
+                    </div>
+
+                    <button
+                        class="secondary-btn"
+                        ng-click="showSection('dashboard')">
+
+                        ← Dashboard
+                    </button>
+
+                </div>
+
+
+                <!-- ADD PROJECT -->
+                <div class="premium-card mb-4">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-8">
+
+                            <label>Add New Project</label>
+
+                            <input
+                                type="text"
+                                class="form-control modern-input"
+                                placeholder="Example: Student Management System"
+                                ng-model="newProject">
+
+                        </div>
+
+                        <div class="col-md-4 d-flex align-items-end">
+
+                            <button
+                                class="primary-btn w-100"
+                                ng-click="addProject()">
+
+                                + Add Project
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROJECT LIST -->
+                <div class="premium-card">
+
+                    <div class="card-heading">
+
+                        <div>
+                            <h4>Your Projects</h4>
+                            <span>{{ projects.length }} projects</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="project-grid">
+
+                        <div
+                            class="project-card"
+                            ng-repeat="project in projects">
+
+                            <div class="project-card-top">
+
+                                <div class="project-icon">
+                                    ◆
+                                </div>
+
+                                <button
+                                    class="delete-btn"
+                                    ng-click="deleteProject($index)">
+
+                                    ×
+                                </button>
+
+                            </div>
+
+
+                            <h4>
+                                {{ project }}
+                            </h4>
+
+                            <p>
+                                Student project added to your
+                                SkillTrack portfolio.
+                            </p>
+
+                            <div class="project-footer">
+
+                                <span>
+                                    PROJECT
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
 
     </div>
 
 
-    <!-- PROJECTS SECTION -->
-    <div class="container mt-5" ng-show="section == 'projects'">
+    <!-- ================= SCRIPTS ================= -->
 
-        <div class="card p-4">
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
 
-            <h2>🚀 My Projects</h2>
-
-            <div class="input-group my-3">
-
-                <input type="text"
-                       class="form-control"
-                       ng-model="newProject"
-                       placeholder="Enter project name">
-
-                <button class="btn btn-success"
-                        ng-click="addProject()">
-                    + Add Project
-                </button>
-
-            </div>
-
-            <div class="project-item"
-                 ng-repeat="project in projects">
-
-                <span>🚀 {{project}}</span>
-
-                <button class="btn btn-sm btn-danger float-end"
-                        ng-click="deleteProject($index)">
-                    Delete
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- ANGULARJS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script
+        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js">
+    </script>
 
     <script src="js/app.js"></script>
 

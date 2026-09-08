@@ -1,170 +1,457 @@
+// =========================================================
+// SKILLTRACK - ANGULARJS APPLICATION
+// Service + Controller + Forms + LocalStorage
+// =========================================================
+
+
+// ================= MODULE =================
+
 var app = angular.module("skillTrackApp", []);
 
-app.controller("MainController", function ($scope) {
 
-    // Default Section
+// =========================================================
+// SERVICE
+// =========================================================
+
+app.service("SkillTrackService", function () {
+
+    var storageKey = "skillTrackData";
+
+
+    // Save all data
+    this.saveData = function (data) {
+
+        localStorage.setItem(
+            storageKey,
+            JSON.stringify(data)
+        );
+
+    };
+
+
+    // Load all data
+    this.loadData = function () {
+
+        var savedData = localStorage.getItem(storageKey);
+
+        if (savedData) {
+            return JSON.parse(savedData);
+        }
+
+        return null;
+    };
+
+});
+
+
+// =========================================================
+// CONTROLLER
+// =========================================================
+
+app.controller("MainController", function (
+    $scope,
+    SkillTrackService
+) {
+
+
+    // =====================================================
+    // CURRENT SECTION
+    // =====================================================
+
     $scope.section = "dashboard";
 
-    // Student Profile
+
+    // =====================================================
+    // STUDENT PROFILE
+    // =====================================================
+
     $scope.student = {
+
         name: "Student Name",
+
         email: "",
+
         phone: "",
+
         course: "Computer Science",
+
         year: "Third Year"
+
     };
 
-    // Skills
+
+    // =====================================================
+    // SKILLS
+    // =====================================================
+
     $scope.skills = [
+
         "HTML",
+
         "CSS",
+
         "JavaScript",
+
         "AngularJS"
+
     ];
 
-    // Courses
+
+    // =====================================================
+    // COURSES
+    // =====================================================
+
     $scope.courses = [
+
         "Web Development",
+
         "Database Management"
+
     ];
 
-    // Course Progress
-    $scope.courseProgress = [60, 40];
 
-    // Internships
+    // Course progress
+
+    $scope.courseProgress = [
+
+        60,
+
+        40
+
+    ];
+
+
+    // =====================================================
+    // INTERNSHIPS
+    // =====================================================
+
     $scope.internships = [
+
         "Web Development Internship"
+
     ];
 
-    // Internship Status
-    $scope.internshipStatus = ["Applied"];
 
-    // Projects
+    $scope.internshipStatus = [
+
+        "Applied"
+
+    ];
+
+
+    // =====================================================
+    // PROJECTS
+    // =====================================================
+
     $scope.projects = [
+
         "Student Management System",
+
         "Smart Classroom Alert System"
+
     ];
 
 
-    // Navigation
+    // =====================================================
+    // SEARCH VARIABLES
+    // =====================================================
+
+    $scope.skillSearch = "";
+
+    $scope.courseSearch = "";
+
+    $scope.internshipSearch = "";
+
+
+    // =====================================================
+    // NEW ITEM VARIABLES
+    // =====================================================
+
+    $scope.newSkill = "";
+
+    $scope.newCourse = "";
+
+    $scope.newInternship = "";
+
+    $scope.newProject = "";
+
+
+    // =====================================================
+    // NAVIGATION
+    // =====================================================
+
     $scope.showSection = function (section) {
+
         $scope.section = section;
+
     };
 
 
-    // Add Skill
+    // =====================================================
+    // ADD SKILL
+    // =====================================================
+
     $scope.addSkill = function () {
-        if ($scope.newSkill && $scope.newSkill.trim() !== "") {
-            $scope.skills.push($scope.newSkill.trim());
+
+        if (
+            $scope.newSkill &&
+            $scope.newSkill.trim() !== ""
+        ) {
+
+            $scope.skills.push(
+                $scope.newSkill.trim()
+            );
+
             $scope.newSkill = "";
+
         }
+
     };
 
 
-    // Delete Skill
+    // =====================================================
+    // DELETE SKILL
+    // =====================================================
+
     $scope.deleteSkill = function (index) {
+
         $scope.skills.splice(index, 1);
+
     };
 
 
-    // Add Course
+    // =====================================================
+    // ADD COURSE
+    // =====================================================
+
     $scope.addCourse = function () {
-        if ($scope.newCourse && $scope.newCourse.trim() !== "") {
-            $scope.courses.push($scope.newCourse.trim());
+
+        if (
+            $scope.newCourse &&
+            $scope.newCourse.trim() !== ""
+        ) {
+
+            $scope.courses.push(
+                $scope.newCourse.trim()
+            );
+
             $scope.courseProgress.push(0);
+
             $scope.newCourse = "";
+
         }
+
     };
 
 
-    // Delete Course
+    // =====================================================
+    // DELETE COURSE
+    // =====================================================
+
     $scope.deleteCourse = function (index) {
+
         $scope.courses.splice(index, 1);
+
         $scope.courseProgress.splice(index, 1);
+
     };
 
 
-    // Add Internship
+    // =====================================================
+    // ADD INTERNSHIP
+    // =====================================================
+
     $scope.addInternship = function () {
-        if ($scope.newInternship && $scope.newInternship.trim() !== "") {
 
-            $scope.internships.push($scope.newInternship.trim());
+        if (
+            $scope.newInternship &&
+            $scope.newInternship.trim() !== ""
+        ) {
 
-            $scope.internshipStatus.push("Applied");
+            $scope.internships.push(
+                $scope.newInternship.trim()
+            );
+
+            $scope.internshipStatus.push(
+                "Applied"
+            );
 
             $scope.newInternship = "";
+
         }
+
     };
 
 
-    // Delete Internship
+    // =====================================================
+    // DELETE INTERNSHIP
+    // =====================================================
+
     $scope.deleteInternship = function (index) {
+
         $scope.internships.splice(index, 1);
+
         $scope.internshipStatus.splice(index, 1);
+
     };
 
 
-    // Add Project
+    // =====================================================
+    // ADD PROJECT
+    // =====================================================
+
     $scope.addProject = function () {
-        if ($scope.newProject && $scope.newProject.trim() !== "") {
-            $scope.projects.push($scope.newProject.trim());
+
+        if (
+            $scope.newProject &&
+            $scope.newProject.trim() !== ""
+        ) {
+
+            $scope.projects.push(
+                $scope.newProject.trim()
+            );
+
             $scope.newProject = "";
+
         }
+
     };
 
 
-    // Delete Project
+    // =====================================================
+    // DELETE PROJECT
+    // =====================================================
+
     $scope.deleteProject = function (index) {
+
         $scope.projects.splice(index, 1);
+
     };
 
 
-    // Save Profile
+    // =====================================================
+    // SAVE PROFILE
+    // =====================================================
+
     $scope.saveProfile = function () {
-        alert("Profile saved successfully! ✅");
+
+        $scope.saveData();
+
+        alert("Profile saved successfully!");
+
     };
 
 
-    // Save All Data
+    // =====================================================
+    // SAVE ALL DATA
+    // =====================================================
+
     $scope.saveData = function () {
 
         var data = {
+
             student: $scope.student,
+
             skills: $scope.skills,
+
             courses: $scope.courses,
+
             courseProgress: $scope.courseProgress,
+
             internships: $scope.internships,
-            internshipStatus: $scope.internshipStatus,
+
+            internshipStatus:
+                $scope.internshipStatus,
+
             projects: $scope.projects
+
         };
 
-        localStorage.setItem("skillTrackData", JSON.stringify(data));
 
-        alert("All data saved successfully! ✅");
+        SkillTrackService.saveData(data);
+
+        alert("All data saved successfully!");
+
     };
 
 
-    // Load Saved Data
+    // =====================================================
+    // LOAD DATA
+    // =====================================================
+
     $scope.loadData = function () {
 
-        var savedData = localStorage.getItem("skillTrackData");
+        var data =
+            SkillTrackService.loadData();
 
-        if (savedData) {
 
-            var data = JSON.parse(savedData);
+        if (data) {
 
-            $scope.student = data.student || $scope.student;
-            $scope.skills = data.skills || $scope.skills;
-            $scope.courses = data.courses || $scope.courses;
-            $scope.courseProgress = data.courseProgress || $scope.courseProgress;
-            $scope.internships = data.internships || $scope.internships;
-            $scope.internshipStatus = data.internshipStatus || $scope.internshipStatus;
-            $scope.projects = data.projects || $scope.projects;
+            if (data.student) {
+
+                $scope.student =
+                    data.student;
+
+            }
+
+
+            if (data.skills) {
+
+                $scope.skills =
+                    data.skills;
+
+            }
+
+
+            if (data.courses) {
+
+                $scope.courses =
+                    data.courses;
+
+            }
+
+
+            if (data.courseProgress) {
+
+                $scope.courseProgress =
+                    data.courseProgress;
+
+            }
+
+
+            if (data.internships) {
+
+                $scope.internships =
+                    data.internships;
+
+            }
+
+
+            if (data.internshipStatus) {
+
+                $scope.internshipStatus =
+                    data.internshipStatus;
+
+            }
+
+
+            if (data.projects) {
+
+                $scope.projects =
+                    data.projects;
+
+            }
+
         }
+
     };
 
 
-    // Load data when website starts
+    // =====================================================
+    // LOAD SAVED DATA WHEN APPLICATION STARTS
+    // =====================================================
+
     $scope.loadData();
+
 
 });
